@@ -64,7 +64,7 @@ body {
   font-family: 'Hind', sans-serif;
   color: ${props => props.theme.white.darker};
   line-height: 1.2;
-background-color: skyblue;
+/* background-color: skyblue; */
 }
 a {
   text-decoration: none;
