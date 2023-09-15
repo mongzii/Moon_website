@@ -118,6 +118,7 @@ function Header() {
   };
   //메뉴의 빨간점관련
   const homeMatch = useMatch("/");
+  const movieMatch = useMatch("/movies");
   const tvMatch = useMatch("/tv");
   //스크롤관련
   const navAnimation = useAnimation();
@@ -150,6 +151,11 @@ function Header() {
             <Item>
               <Link to="/">
                 Home{homeMatch && <Circle layoutId="circle" />}
+              </Link>
+            </Item>
+            <Item>
+              <Link to="/movies">
+                Movies{movieMatch && <Circle layoutId="circle" />}
               </Link>
             </Item>
             <Item>

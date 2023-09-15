@@ -1,13 +1,11 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
-import { getMovies, IGetMoviesResult } from "../api";
+import { getHomeTv, IGetHOMETVResult } from "../api";
 import { makeImagePath } from "../utils";
-import { useState } from "react";
 
 const Wrapper = styled.div`
   background-color: black;
-  height: 200vh;
+  height: 300vh;
 `;
 const Loader = styled.div`
   height: 20vh;
@@ -19,103 +17,115 @@ const Main = styled.div<{ bgPhoto: string }>`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 60px;
   background-size: cover;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 1)),
-    //gradient는 이미지가 글자가려서 넣은거다
     url(${props => props.bgPhoto});
 `;
-const Title = styled.h3`
-  font-size: 68px;
-  margin-bottom: 20px;
+const Greeting = styled.h2`
+  font-size: 70px;
+  color: gray;
 `;
-const Overview = styled.p`
-  font-size: 33px;
-  width: 50%;
-`;
-const Slider = styled.div`
+// const Title = styled.h3`
+//   font-size: 40px;
+//   margin-bottom: 20px;
+// `;
+// const Overview = styled.p`
+//   font-size: 25px;
+//   width: 50%;
+// `;
+const Title1 = styled.h3`
+  color: white;
+  font-size: 25px;
+  font-weight: 500;
   position: relative;
-  top: -100px;
+  top: 130px;
+  padding-left: 30px;
 `;
-
-const Row = styled(motion.div)`
+const Slider1 = styled.div`
+  position: relative;
+  top: 150px;
+`;
+const Row1 = styled.div`
   display: grid;
-  gap: 5px;
   grid-template-columns: repeat(6, 1fr);
-  position: absolute;
+  gap: 5px;
   width: 100%;
+  position: absolute;
 `;
-const Box = styled(motion.div)<{ bgPhoto: string }>`
+const Box1 = styled.div`
   background-color: white;
-  background-image: url(${props => props.bgPhoto});
-  background-size: cover;
-  background-position: center center;
   height: 200px;
-  color: red;
-  font-size: 40px;
+  cursor: pointer;
 `;
-const rowVariants = {
-  hidden: { x: window.outerWidth + 5 },
-  visible: { x: 0 },
-  exit: { x: -window.outerWidth - 5 },
-};
-const offset = 6;
+const Title2 = styled.h3`
+  color: white;
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+  top: 480px;
+  padding-left: 20px;
+`;
+const Slider2 = styled.div`
+  position: relative;
+  top: 500px;
+`;
+const Row2 = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  width: 100%;
+  position: absolute;
+`;
+const Box2 = styled.div`
+  background-color: white;
+  height: 200px;
+  cursor: pointer;
+`;
 
 function Home() {
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
-    ["movies", "nowPlaying"],
-    getMovies
+  const { data, isLoading } = useQuery<IGetHOMETVResult>(
+    ["hometv", "trending"],
+    getHomeTv
   );
-  //   console.log(data);
-  const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
-  const increaseIndex = () => {
-    if (data) {
-      if (leaving) return;
-      toggleLeaving();
-      const totalMovies = data?.results.length - 1;
-      const maxIndex = Math.ceil(totalMovies / offset) - 1;
-      setIndex(prev => (prev === maxIndex ? 0 : prev + 1));
-    }
-  };
-  const toggleLeaving = () => setLeaving(prev => !prev);
+  console.log(data);
   return (
     <>
       <Wrapper>
         {isLoading ? (
-          <Loader>Loading.....</Loader>
+          <Loader>Loading...</Loader>
         ) : (
           <>
-            <Main
-              onClick={increaseIndex}
-              bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
-            >
-              <Title>{data?.results[0].title}</Title>
-              <Overview>{data?.results[0].overview}</Overview>
+            <Main bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}>
+              <Greeting>Welcome to the MoonFlix</Greeting>
+              {/* <Title>{data?.results[1].title || data?.results[1].name}</Title>
+              <Overview>{data?.results[1].overview}</Overview> */}
             </Main>
-            <Slider>
-              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-                <Row
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  transition={{ type: "tween", duration: 1 }}
-                  key={index}
-                >
-                  {data?.results
-                    .slice(1)
-                    .slice(offset * index, offset * index + offset)
-                    .map(movie => (
-                      <Box
-                        key={movie.id}
-                        bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
-                      />
-                    ))}
-                </Row>
-              </AnimatePresence>
-            </Slider>
+
+            <Title1>Tv</Title1>
+            <Slider1>
+              <Row1>
+                <Box1 />
+                <Box1 />
+                <Box1 />
+                <Box1 />
+                <Box1 />
+                <Box1 />
+              </Row1>
+            </Slider1>
+
+            <Title2>Movies</Title2>
+            <Slider2>
+              <Row2>
+                <Box2 />
+                <Box2 />
+                <Box2 />
+                <Box2 />
+                <Box2 />
+                <Box2 />
+              </Row2>
+            </Slider2>
           </>
         )}
       </Wrapper>
