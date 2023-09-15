@@ -1,6 +1,11 @@
 import { useQuery } from "react-query";
 import styled from "styled-components";
-import { getHomeTv, IGetHOMETVResult } from "../api";
+import {
+  getHomeTv,
+  IGetHOMETVResult,
+  getHomeMovies,
+  IGETHOMEMOVIEResult,
+} from "../api";
 import { makeImagePath } from "../utils";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -76,34 +81,52 @@ const Slider2 = styled.div`
   position: relative;
   top: 500px;
 `;
-const Row2 = styled.div`
+const Row2 = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 5px;
   width: 100%;
   position: absolute;
 `;
-const Box2 = styled.div`
+const Box2 = styled(motion.div)<{ bgPhoto: string }>`
   background-color: white;
   height: 200px;
   cursor: pointer;
+  background-image: url(${props => props.bgPhoto});
+  background-size: cover;
+  background-position: center center;
 `;
 const offset = 6;
 
 function Home() {
-  const { data, isLoading } = useQuery<IGetHOMETVResult>(
+  const { data: hometv, isLoading } = useQuery<IGetHOMETVResult>(
     ["hometv", "trending"],
     getHomeTv
   );
-  console.log(data);
+  const { data: homemovie } = useQuery<IGETHOMEMOVIEResult>(
+    ["homemovie", "trending"],
+    getHomeMovies
+  );
+  //console.log(homemovie);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving(prev => !prev);
-  const increaseIndex = () => {
-    if (data) {
+
+  const increasetvIndex = () => {
+    if (hometv) {
       if (leaving) return;
       toggleLeaving();
-      const totalMovies = data?.results.length - 1;
+      const totalTVs = hometv?.results.length - 1;
+      const maxIndex = Math.ceil(totalTVs / offset) - 1;
+      setIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+    }
+  };
+
+  const increasemoviIndex = () => {
+    if (homemovie) {
+      if (leaving) return;
+      toggleLeaving();
+      const totalMovies = homemovie?.results.length - 1;
       const maxIndex = Math.ceil(totalMovies / offset) - 1;
       setIndex(prev => (prev === maxIndex ? 0 : prev + 1));
     }
@@ -116,13 +139,13 @@ function Home() {
         ) : (
           <>
             <Main
-              onClick={increaseIndex}
-              bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")}
+              onClick={increasetvIndex}
+              bgPhoto={makeImagePath(hometv?.results[0].backdrop_path || "")}
             >
               <Greeting>Welcome to the MoonFlix</Greeting>
             </Main>
 
-            <Title1 onClick={increaseIndex}>Tv</Title1>
+            <Title1 onClick={increasetvIndex}>Tv</Title1>
             <Slider1>
               <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
                 <Row1
@@ -133,7 +156,7 @@ function Home() {
                   key={index}
                   transition={{ type: "tween", duration: 1 }}
                 >
-                  {data?.results
+                  {hometv?.results
                     .slice(1)
                     .slice(offset * index, offset * index + offset)
                     .map(tv => (
@@ -146,16 +169,28 @@ function Home() {
               </AnimatePresence>
             </Slider1>
 
-            <Title2>Movies</Title2>
+            <Title2 onClick={increasemoviIndex}>Movies</Title2>
             <Slider2>
-              <Row2>
-                <Box2 />
-                <Box2 />
-                <Box2 />
-                <Box2 />
-                <Box2 />
-                <Box2 />
-              </Row2>
+              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+                <Row2
+                  variants={rowVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  key={index}
+                  transition={{ type: "tween", duration: 1 }}
+                >
+                  {homemovie?.results
+                    .slice(1)
+                    .slice(offset * index, offset * index + offset)
+                    .map(movie => (
+                      <Box2
+                        bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
+                        key={movie.id}
+                      />
+                    ))}
+                </Row2>
+              </AnimatePresence>
             </Slider2>
           </>
         )}

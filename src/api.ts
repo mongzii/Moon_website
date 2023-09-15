@@ -32,11 +32,6 @@ interface IHOMETV {
   overview: string;
   backdrop_path: string;
   poster_path: string;
-  media_type: string;
-  popularity: number;
-  releas_date: string;
-  vote_average: number;
-  vote_count: number;
 }
 export interface IGetHOMETVResult {
   page: number;
@@ -47,6 +42,27 @@ export interface IGetHOMETVResult {
 export function getHomeTv() {
   return fetch(
     `${BASE_PATH}/trending/tv/week?language=en-US&api_key=${API_KEY}`
+  ).then(res => res.json());
+}
+//-------------*home화면 movies*---------------------------------
+interface IHOMEMOVIE {
+  id: number;
+  title: string;
+  overview: string;
+  backdrop_path: string;
+  poster_path: string;
+}
+
+export interface IGETHOMEMOVIEResult {
+  page: number;
+  results: IHOMEMOVIE[];
+  total_pages: number;
+  total_results: number;
+}
+
+export function getHomeMovies() {
+  return fetch(
+    `${BASE_PATH}/trending/movie/week?language=en-US&api_key=${API_KEY}`
   ).then(res => res.json());
 }
 
