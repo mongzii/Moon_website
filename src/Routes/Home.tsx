@@ -108,7 +108,8 @@ function Home() {
     getHomeMovies
   );
   //console.log(homemovie);
-  const [index, setIndex] = useState(0);
+  const [tvindex, settvIndex] = useState(0);
+  const [movieindex, setmovieIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving(prev => !prev);
 
@@ -118,7 +119,7 @@ function Home() {
       toggleLeaving();
       const totalTVs = hometv?.results.length - 1;
       const maxIndex = Math.ceil(totalTVs / offset) - 1;
-      setIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+      settvIndex(prev => (prev === maxIndex ? 0 : prev + 1));
     }
   };
 
@@ -128,7 +129,7 @@ function Home() {
       toggleLeaving();
       const totalMovies = homemovie?.results.length - 1;
       const maxIndex = Math.ceil(totalMovies / offset) - 1;
-      setIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+      setmovieIndex(prev => (prev === maxIndex ? 0 : prev + 1));
     }
   };
   return (
@@ -153,12 +154,12 @@ function Home() {
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  key={index}
+                  key={tvindex}
                   transition={{ type: "tween", duration: 1 }}
                 >
                   {hometv?.results
                     .slice(1)
-                    .slice(offset * index, offset * index + offset)
+                    .slice(offset * tvindex, offset * tvindex + offset)
                     .map(tv => (
                       <Box1
                         bgPhoto={makeImagePath(tv.backdrop_path, "w400")}
@@ -177,12 +178,12 @@ function Home() {
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  key={index}
+                  key={movieindex}
                   transition={{ type: "tween", duration: 1 }}
                 >
                   {homemovie?.results
                     .slice(1)
-                    .slice(offset * index, offset * index + offset)
+                    .slice(offset * movieindex, offset * movieindex + offset)
                     .map(movie => (
                       <Box2
                         bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
