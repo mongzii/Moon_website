@@ -1,5 +1,62 @@
 const API_KEY = "cdf194177728b3f9a1f10fe1795e361a";
 const BASE_PATH = "https://api.themoviedb.org/3";
+//-------------*tv화면 popular----------
+interface ITv {
+  id: number;
+  backdrop_path: string; //배경사진
+  poster_path: string; //포스터사진
+  title: string; //제목
+  overview: string; //줄거리
+}
+export interface IGetTvPResult {
+  dates: {
+    maximum: string;
+    minimum: string;
+  };
+  page: number;
+  results: ITv[];
+  total_pages: number;
+  total_results: number;
+}
+export function getTvP() {
+  return fetch(
+    `${BASE_PATH}/tv/popular?language=en-US&api_key=${API_KEY}`
+  ).then(res => res.json());
+}
+//-------------*tv화면 topRated----------
+export interface IGetTvTResult {
+  dates: {
+    maximum: string;
+    minimum: string;
+  };
+  page: number;
+  results: ITv[];
+  total_pages: number;
+  total_results: number;
+}
+export function getTvT() {
+  return fetch(
+    `${BASE_PATH}/tv/top_rated?language=en-US&api_key=${API_KEY}`
+  ).then(res => res.json());
+}
+
+//-------------*tv화면 similar----------
+export interface IGetTvSResult {
+  dates: {
+    maximum: string;
+    minimum: string;
+  };
+  page: number;
+  results: ITv[];
+  total_pages: number;
+  total_results: number;
+}
+export function getTvS() {
+  return fetch(
+    `${BASE_PATH}/tv/series_id/similar?language=en-US&api_key=${API_KEY}`
+  ).then(res => res.json());
+}
+
 //-------------*movie화면 upcoming----------
 export interface IMoviesUpcomeResult {
   dates: {

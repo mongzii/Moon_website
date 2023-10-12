@@ -270,35 +270,55 @@ function Movie() {
   // console.log(moviepopular);
   // console.log(movierate);
   // console.log(movieupcome);
-  const [index, setIndex] = useState(0);
+  const [pindex, setpIndex] = useState(0);
+  const [tindex, settIndex] = useState(0);
+  const [uindex, setuIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  const toggleLeaving = () => setLeaving(prev => !prev);
   const increaseIndex = () => {
-    if (movienow) {
+    if (moviepopular) {
       if (leaving) return;
       toggleLeaving();
-      const totalMovies = movienow?.results.length - 1;
+      const totalMovies = moviepopular?.results.length - 1;
       const maxIndex = Math.ceil(totalMovies / offset) - 1;
-      setIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+      setpIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+    }
+    if (movierate) {
+      if (leaving) return;
+      toggleLeaving();
+      const totalRate = movierate?.results.length - 1;
+      const maxIndex = Math.ceil(totalRate / offset) - 1;
+      settIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+    }
+    if (movieupcome) {
+      if (leaving) return;
+      toggleLeaving();
+      const totalUp = movieupcome?.results.length - 1;
+      const maxIndex = Math.ceil(totalUp / offset) - 1;
+      setuIndex(prev => (prev === maxIndex ? 0 : prev + 1));
     }
   };
-  const toggleLeaving = () => setLeaving(prev => !prev);
+
   //모달관련
   const navigate = useNavigate();
   const onBoxclicked = (movieId: number) => {
     navigate(`/movies/${movieId}`);
   };
-  // const onBoxclicked = (movieId: number) => {
-  //   console.log(movieId);
-  // };
   const bigMovieMatch = useMatch("/movies/:movieId");
   const onOverlayClick = () => navigate("/movies");
   const { scrollY } = useViewportScroll();
   const clickedMovie =
     bigMovieMatch?.params.movieId &&
-    moviepopular?.results.find(
+    (moviepopular || movierate || movieupcome)?.results.find(
       movie => String(movie.id) === bigMovieMatch.params.movieId
     );
-  console.log(clickedMovie);
+  // const clickedMovie2 =
+  //   bigMovieMatch?.params.movieId &&
+  //   movierate?.results.find(
+  //     movie => String(movie.id) === bigMovieMatch.params.movieId
+  //   );
+  // console.log(clickedMovie2);
+
   return (
     <>
       <Wrapper>
@@ -315,72 +335,6 @@ function Movie() {
               <Title>{movienow?.results[0].title}</Title>
               <Overview>{movienow?.results[0].overview}</Overview>
             </Main>
-            {/* <Title>{movienow?.results[0].title}</Title>
-              <Overview>{movienow?.results[0].overview}</Overview>
-            </Main>
-            <Title1>Now Playing</Title1>
-            <Slider1>
-              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-                <Row
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  transition={{ type: "tween", duration: 1 }}
-                  key={index}
-                >
-                  {movienow?.results
-                    .slice(1)
-                    .slice(offset * index, offset * index + offset)
-                    .map(el => (
-                      <Box
-                        layoutId={el.id + ""}
-                        key={el.id}
-                        variants={boxVariants}
-                        initial="normal"
-                        whileHover="hover"
-                        transition={{ type: "tween" }}
-                        onClick={() => onBoxclicked(el.id)}
-                        bgPhoto={makeImagePath(el.backdrop_path, "w500")}
-                      >
-                        <Info variants={infoVariants}>
-                          <h4>{el.title}</h4>
-                        </Info>
-                      </Box>
-                    ))}
-                </Row>
-              </AnimatePresence>
-            </Slider1>
-            <AnimatePresence>
-              {bigMovieMatch ? (
-                <>
-                  <Overlay
-                    onClick={onOverlayClick}
-                    exit={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  />
-                  <BigMovie
-                    style={{ top: scrollY.get() + 100 }}
-                    layoutId={bigMovieMatch.params.movieId}
-                  >
-                    {clickedMovie && (
-                      <>
-                        <BigCover
-                          style={{
-                            backgroundImage: `linear-gradient(to top, black, transparent), url(${makeImagePath(
-                              clickedMovie.backdrop_path,
-                              "w500"
-                            )})`,
-                          }}
-                        />
-                        <BigTitle>{clickedMovie.title}</BigTitle>
-                        <BigOverview>{clickedMovie.overview}</BigOverview>
-                      </>
-                    )}
-                  </BigMovie>
-                </>
-              ) : null}
-            </AnimatePresence> */}
             {/* -------------popular부분--------------------------------------------------------- */}
             <Title1>Popular</Title1>
             <Slider1>
@@ -391,11 +345,11 @@ function Movie() {
                   animate="visible"
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
-                  key={index}
+                  key={pindex}
                 >
                   {moviepopular?.results
                     .slice(1)
-                    .slice(offset * index, offset * index + offset)
+                    .slice(offset * pindex, offset * pindex + offset)
                     .map(movie => (
                       <Box2
                         layoutId={movie.id + ""}
@@ -455,11 +409,11 @@ function Movie() {
                   animate="visible"
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
-                  key={index}
+                  key={tindex}
                 >
                   {movierate?.results
                     .slice(1)
-                    .slice(offset * index, offset * index + offset)
+                    .slice(offset * tindex, offset * tindex + offset)
                     .map(a => (
                       <Box3
                         layoutId={a.id + ""}
@@ -479,6 +433,36 @@ function Movie() {
                 </Row2>
               </AnimatePresence>
             </Slider2>
+            <AnimatePresence>
+              {bigMovieMatch ? (
+                <>
+                  <Overlay
+                    onClick={onOverlayClick}
+                    exit={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  />
+                  <BigMovie
+                    style={{ top: scrollY.get() + 100 }}
+                    layoutId={bigMovieMatch.params.movieId}
+                  >
+                    {clickedMovie && (
+                      <>
+                        <BigCover
+                          style={{
+                            backgroundImage: `linear-gradient(to top, black, transparent), url(${makeImagePath(
+                              clickedMovie.backdrop_path,
+                              "w500"
+                            )})`,
+                          }}
+                        />
+                        <BigTitle>{clickedMovie.title}</BigTitle>
+                        <BigOverview>{clickedMovie.overview}</BigOverview>
+                      </>
+                    )}
+                  </BigMovie>
+                </>
+              ) : null}
+            </AnimatePresence>
             {/* -------------Upcoming부분--------------------------------------------------------- */}
             <Title3>Upcoming</Title3>
             <Slider3>
@@ -489,11 +473,11 @@ function Movie() {
                   animate="visible"
                   exit="exit"
                   transition={{ type: "tween", duration: 1 }}
-                  key={index}
+                  key={uindex}
                 >
                   {movieupcome?.results
                     .slice(1)
-                    .slice(offset * index, offset * index + offset)
+                    .slice(offset * uindex, offset * uindex + offset)
                     .map(b => (
                       <Box4
                         layoutId={b.id + ""}
