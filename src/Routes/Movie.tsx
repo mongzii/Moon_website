@@ -194,6 +194,7 @@ const BigMovie = styled(motion.div)`
   border-radius: 5px;
   overflow: hidden;
   background-color: ${props => props.theme.black.lighter};
+  z-index: 7;
 `;
 //overlay의 사진부분
 const BigCover = styled.div`
