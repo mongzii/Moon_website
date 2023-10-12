@@ -13,11 +13,13 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
+          <Route path="/movies/:moviesId" element=<Movie /> />
           <Route path="/movies" element=<Movie /> />
           <Route path="/tv" element=<Tv /> />
           <Route path="/search" element=<Search /> />
+          <Route path="/trends/:trendTvId" element=<Home /> />
+          <Route path="/trends/:trendMovieId" element=<Home /> />
           <Route path="/" element=<Home /> />
-          <Route path="/movies/:movieId" element=<Home /> />
         </Routes>
       </BrowserRouter>
     </>
