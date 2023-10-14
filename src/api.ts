@@ -32,19 +32,6 @@ export function getTvT() {
   ).then(res => res.json());
 }
 
-//-------------*tv화면 similar----------
-export interface IGetTvSResult {
-  page: number;
-  results: ITv[];
-  total_pages: number;
-  total_results: number;
-}
-export function getTvS() {
-  return fetch(
-    `${BASE_PATH}/tv/series_id/similar?language=en-US&api_key=${API_KEY}`
-  ).then(res => res.json());
-}
-
 //-------------*movie화면 upcoming----------
 export interface IMoviesUpcomeResult {
   dates: {

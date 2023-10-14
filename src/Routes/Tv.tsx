@@ -1,13 +1,6 @@
 import styled from "styled-components";
 import { useQuery } from "react-query";
-import {
-  IGetTvPResult,
-  IGetTvTResult,
-  IGetTvSResult,
-  getTvP,
-  getTvT,
-  getTvS,
-} from "../api";
+import { IGetTvPResult, IGetTvTResult, getTvP, getTvT } from "../api";
 import { makeImagePath } from "../utils";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,50 +49,69 @@ const Row = styled(motion.div)`
   position: absolute;
   width: 100%;
 `;
-// const Box = styled(motion.div)<{ bgPhoto: string }>`
-//   background-color: white;
-//   background-image: url(${props => props.bgPhoto});
-//   height: 200px;
-// `;
-const Box = styled(motion.div)`
+
+const Box = styled(motion.div)<{ bgPhoto: string }>`
   background-color: white;
+  background-image: url(${props => props.bgPhoto});
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
   height: 200px;
   color: red;
-  font-size: 66px;
+  font-size: 50px;
 `;
+
+const Title2 = styled.h3`
+  font-size: 38px;
+  color: white;
+  position: relative;
+  top: 240px;
+  padding-left: 20px;
+`;
+const Slider2 = styled.div`
+  position: relative;
+  top: 260px;
+`;
+
 const rowVariants = {
   hidden: { x: window.outerWidth + 5 },
   visible: { x: 0 },
   exit: { x: -window.outerWidth - 5 },
 };
 const offset = 6;
+
 function Tv() {
   const { data: tvpopular, isLoading } = useQuery<IGetTvPResult>(
     ["tvpopular", "popular"],
     getTvP
   );
   const { data: tvrate } = useQuery<IGetTvTResult>(["tvrate", "rated"], getTvT);
-  const { data: tvsimilar } = useQuery<IGetTvSResult>(
-    ["tvsimilar", "similared"],
-    getTvS
-  );
+
   const [pindex, setpIndex] = useState(0);
   const [rindex, setrIndex] = useState(0);
-  const [sindex, setsIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving(prev => !prev);
-  const increaseIndex = () => {
-    // if (tvpopular) {
-    //   if (leaving) return;
-    //   toggleLeaving();
-    //   const totaltvs = tvpopular?.results.length - 1;
-    //   const maxIndex = Math.ceil(totaltvs / offset) - 1;
-    //   setpIndex(prev => (prev === maxIndex ? 0 : prev + 1));
-    // }
-    setpIndex(prev => prev + 1);
+  const increasePIndex = () => {
+    if (tvpopular) {
+      if (leaving) return;
+      toggleLeaving();
+      const totaltvs = tvpopular?.results.length - 1;
+      const maxIndex = Math.ceil(totaltvs / offset) - 1;
+      setpIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+    }
   };
 
-  console.log(tvpopular);
+  const increaseRIndex = () => {
+    if (tvrate) {
+      if (leaving) return;
+      toggleLeaving();
+      const totaltvs = tvrate?.results.length - 1;
+      const maxIndex = Math.ceil(totaltvs / offset) - 1;
+      setrIndex(prev => (prev === maxIndex ? 0 : prev + 1));
+    }
+  };
+
+  //console.log(tvpopular);
   return (
     <>
       <Wrapper>
@@ -108,15 +120,15 @@ function Tv() {
         ) : (
           <>
             <Main
-              onClick={increaseIndex}
               bgPhoto={makeImagePath(tvpopular?.results[0].backdrop_path || "")}
             >
               <Title>{tvpopular?.results[0].name}</Title>
               <Overview>{tvpopular?.results[0].overview}</Overview>
             </Main>
-            <Title1>Popular</Title1>
+            {/*-------------------popular부분--------------------------------------------------------- */}
+            <Title1 onClick={increasePIndex}>Popular</Title1>
             <Slider1>
-              <AnimatePresence>
+              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
                 <Row
                   variants={rowVariants}
                   initial="hidden"
@@ -125,18 +137,42 @@ function Tv() {
                   transition={{ type: "tween", duration: 0.4 }}
                   key={pindex}
                 >
-                  {/* {tvpopular?.results
+                  {tvpopular?.results
                     .slice(1)
                     .slice(offset * pindex, offset * pindex + offset)
                     .map(a => (
-                      <Box key={a.id} />
-                    ))} */}
-                  {[1, 2, 3, 4, 5, 6].map(i => (
-                    <Box key={i}>{i}</Box>
-                  ))}
+                      <Box
+                        key={a.id}
+                        bgPhoto={makeImagePath(a.backdrop_path)}
+                      />
+                    ))}
                 </Row>
               </AnimatePresence>
             </Slider1>
+            {/* -------------top ranked부분--------------------------------------------------------- */}
+            <Title2 onClick={increaseRIndex}>Top rated</Title2>
+            <Slider2>
+              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+                <Row
+                  variants={rowVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  transition={{ type: "tween", duration: 0.4 }}
+                  key={rindex}
+                >
+                  {tvrate?.results
+                    .slice()
+                    .slice(offset * rindex, offset * rindex + offset)
+                    .map(b => (
+                      <Box
+                        key={b.id}
+                        bgPhoto={makeImagePath(b.backdrop_path)}
+                      />
+                    ))}
+                </Row>
+              </AnimatePresence>
+            </Slider2>
           </>
         )}
       </Wrapper>
