@@ -275,7 +275,7 @@ function Movie() {
   const [uindex, setuIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving(prev => !prev);
-  const increaseIndex = () => {
+  const increasePIndex = () => {
     if (moviepopular) {
       if (leaving) return;
       toggleLeaving();
@@ -283,6 +283,8 @@ function Movie() {
       const maxIndex = Math.ceil(totalMovies / offset) - 1;
       setpIndex(prev => (prev === maxIndex ? 0 : prev + 1));
     }
+  };
+  const increaseRIndex = () => {
     if (movierate) {
       if (leaving) return;
       toggleLeaving();
@@ -290,6 +292,8 @@ function Movie() {
       const maxIndex = Math.ceil(totalRate / offset) - 1;
       settIndex(prev => (prev === maxIndex ? 0 : prev + 1));
     }
+  };
+  const increaseUIndex = () => {
     if (movieupcome) {
       if (leaving) return;
       toggleLeaving();
@@ -327,16 +331,13 @@ function Movie() {
         ) : (
           <>
             <Main
-              onClick={increaseIndex}
-              bgPhoto={makeImagePath(
-                moviepopular?.results[0].backdrop_path || ""
-              )}
+              bgPhoto={makeImagePath(movienow?.results[0].backdrop_path || "")}
             >
               <Title>{movienow?.results[0].title}</Title>
               <Overview>{movienow?.results[0].overview}</Overview>
             </Main>
             {/* -------------popular부분--------------------------------------------------------- */}
-            <Title1>Popular</Title1>
+            <Title1 onClick={increasePIndex}>Popular</Title1>
             <Slider1>
               <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
                 <Row2
@@ -348,21 +349,21 @@ function Movie() {
                   key={pindex}
                 >
                   {moviepopular?.results
-                    .slice(1)
+                    .slice()
                     .slice(offset * pindex, offset * pindex + offset)
-                    .map(movie => (
+                    .map(a => (
                       <Box2
-                        layoutId={movie.id + ""}
-                        key={movie.id}
+                        layoutId={a.id + ""}
+                        key={a.id}
                         variants={boxVariants}
                         initial="normal"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => onBoxclicked(movie.id)}
-                        bgPhoto={makeImagePath(movie.backdrop_path, "w500")}
+                        onClick={() => onBoxclicked(a.id)}
+                        bgPhoto={makeImagePath(a.backdrop_path, "w500")}
                       >
                         <Info variants={infoVariants}>
-                          <h4>{movie.title}</h4>
+                          <h4>{a.title}</h4>
                         </Info>
                       </Box2>
                     ))}
@@ -400,7 +401,7 @@ function Movie() {
               ) : null}
             </AnimatePresence>
             {/* -------------Top Rated부분--------------------------------------------------------- */}
-            <Title2>Top Rated</Title2>
+            <Title2 onClick={increaseRIndex}>Top Rated</Title2>
             <Slider2>
               <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
                 <Row2
@@ -412,21 +413,21 @@ function Movie() {
                   key={tindex}
                 >
                   {movierate?.results
-                    .slice(1)
+                    .slice()
                     .slice(offset * tindex, offset * tindex + offset)
-                    .map(a => (
+                    .map(b => (
                       <Box3
-                        layoutId={a.id + ""}
-                        key={a.id}
+                        layoutId={b.id + ""}
+                        key={b.id}
                         variants={boxVariants}
                         initial="normal"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => onBoxclicked(a.id)}
-                        bgPhoto={makeImagePath(a.backdrop_path, "w500")}
+                        onClick={() => onBoxclicked(b.id)}
+                        bgPhoto={makeImagePath(b.backdrop_path, "w500")}
                       >
                         <Info variants={infoVariants}>
-                          <h4>{a.title}</h4>
+                          <h4>{b.title}</h4>
                         </Info>
                       </Box3>
                     ))}
@@ -464,7 +465,7 @@ function Movie() {
               ) : null}
             </AnimatePresence>
             {/* -------------Upcoming부분--------------------------------------------------------- */}
-            <Title3>Upcoming</Title3>
+            <Title3 onClick={increaseUIndex}>Upcoming</Title3>
             <Slider3>
               <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
                 <Row2
@@ -476,21 +477,21 @@ function Movie() {
                   key={uindex}
                 >
                   {movieupcome?.results
-                    .slice(1)
+                    .slice()
                     .slice(offset * uindex, offset * uindex + offset)
-                    .map(b => (
+                    .map(c => (
                       <Box4
-                        layoutId={b.id + ""}
-                        key={b.id}
+                        layoutId={c.id + ""}
+                        key={c.id}
                         variants={boxVariants}
                         initial="normal"
                         whileHover="hover"
                         transition={{ type: "tween" }}
-                        onClick={() => onBoxclicked(b.id)}
-                        bgPhoto={makeImagePath(b.backdrop_path, "w500")}
+                        onClick={() => onBoxclicked(c.id)}
+                        bgPhoto={makeImagePath(c.backdrop_path, "w500")}
                       >
                         <Info variants={infoVariants}>
-                          <h4>{b.title}</h4>
+                          <h4>{c.title}</h4>
                         </Info>
                       </Box4>
                     ))}

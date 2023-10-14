@@ -51,15 +51,57 @@ const Row = styled(motion.div)`
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: white;
+  /* background-color: white; */
   background-image: url(${props => props.bgPhoto});
   background-size: cover;
   background-position: center center;
   cursor: pointer;
   height: 200px;
-  color: red;
-  font-size: 50px;
+  /* color: red; */
+  font-size: 40px;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
+const boxVariants = {
+  normal: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.3,
+    y: -80,
+    transition: {
+      delay: 0.5,
+      duration: 0.1,
+      type: "tween",
+    },
+  },
+};
+const Info = styled(motion.div)`
+  background-color: ${props => props.theme.black.lighter};
+  width: 100%;
+  padding: 10px;
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: 18px;
+  }
+`;
+const infoVariants = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      duration: 0.1,
+      type: "tween",
+    },
+  },
+};
 
 const Title2 = styled.h3`
   font-size: 38px;
@@ -142,9 +184,16 @@ function Tv() {
                     .slice(offset * pindex, offset * pindex + offset)
                     .map(a => (
                       <Box
+                        whileHover="hover"
+                        initial="normal"
+                        variants={boxVariants}
                         key={a.id}
                         bgPhoto={makeImagePath(a.backdrop_path)}
-                      />
+                      >
+                        <Info variants={infoVariants}>
+                          <h4>{a.name}</h4>
+                        </Info>
+                      </Box>
                     ))}
                 </Row>
               </AnimatePresence>
@@ -166,9 +215,16 @@ function Tv() {
                     .slice(offset * rindex, offset * rindex + offset)
                     .map(b => (
                       <Box
+                        whileHover="hover"
+                        initial="normal"
+                        variants={boxVariants}
                         key={b.id}
                         bgPhoto={makeImagePath(b.backdrop_path)}
-                      />
+                      >
+                        <Info variants={infoVariants}>
+                          <h4>{b.name}</h4>
+                        </Info>
+                      </Box>
                     ))}
                 </Row>
               </AnimatePresence>
