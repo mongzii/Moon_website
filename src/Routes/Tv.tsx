@@ -9,6 +9,7 @@ import {
   getTvS,
 } from "../api";
 import { makeImagePath } from "../utils";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -19,10 +20,21 @@ const Loader = styled.div`
 `;
 const Main = styled.div`
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  /* background-color: red; */
+`;
+const Title = styled.h3`
+  font-size: 60px;
+  margin-bottom: 20px;
 `;
 const Title1 = styled.h3`
-  font-size: 60px;
+  font-size: 48px;
   color: white;
+  position: relative;
+  top: -120px;
 `;
 const Slider1 = styled.div`
   position: relative;
@@ -50,7 +62,11 @@ function Tv() {
     ["tvsimilar", "similared"],
     getTvS
   );
+  const [pindex, setpIndex] = useState(0);
+  const [rindex, setrIndex] = useState(0);
+  const [sindex, setsIndex] = useState(0);
 
+  console.log(tvpopular);
   return (
     <>
       <Wrapper>
@@ -58,8 +74,10 @@ function Tv() {
           <Loader>Loading....</Loader>
         ) : (
           <>
-            <Main></Main>
-            <Title1></Title1>
+            <Main>
+              <Title>{tvpopular?.results[0].name}</Title>
+            </Main>
+            <Title1>Popular</Title1>
             <Slider1>
               <Row>
                 <Box />

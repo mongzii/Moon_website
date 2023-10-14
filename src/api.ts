@@ -5,14 +5,10 @@ interface ITv {
   id: number;
   backdrop_path: string; //배경사진
   poster_path: string; //포스터사진
-  title: string; //제목
+  name: string; //제목
   overview: string; //줄거리
 }
 export interface IGetTvPResult {
-  dates: {
-    maximum: string;
-    minimum: string;
-  };
   page: number;
   results: ITv[];
   total_pages: number;
@@ -25,10 +21,6 @@ export function getTvP() {
 }
 //-------------*tv화면 topRated----------
 export interface IGetTvTResult {
-  dates: {
-    maximum: string;
-    minimum: string;
-  };
   page: number;
   results: ITv[];
   total_pages: number;
@@ -42,10 +34,6 @@ export function getTvT() {
 
 //-------------*tv화면 similar----------
 export interface IGetTvSResult {
-  dates: {
-    maximum: string;
-    minimum: string;
-  };
   page: number;
   results: ITv[];
   total_pages: number;
