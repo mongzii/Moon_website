@@ -1,7 +1,8 @@
 const API_KEY = "cdf194177728b3f9a1f10fe1795e361a";
 const BASE_PATH = "https://api.themoviedb.org/3";
+
 //-------------*tv화면 popular----------
-interface ITv {
+export interface ITv {
   id: number;
   backdrop_path: string; //배경사진
   poster_path: string; //포스터사진
@@ -13,6 +14,9 @@ export interface IGetTvPResult {
   results: ITv[];
   total_pages: number;
   total_results: number;
+}
+export interface IAAA {
+  data: IGetTvPResult[];
 }
 export function getTvP() {
   return fetch(
