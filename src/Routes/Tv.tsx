@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useQuery } from "react-query";
+import { useQuery, useQueries } from "react-query";
 import { IGetTvPResult, IGetTvTResult, getTvP, getTvT } from "../api";
 import { makeImagePath } from "../utils";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
+import { useMatch, useNavigate, useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
   background-color: black;
@@ -114,6 +115,67 @@ const Slider2 = styled.div`
   position: relative;
   top: 260px;
 `;
+const Overlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+  opacity: 0;
+`;
+const BigModal = styled(motion.div)`
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: ${props => props.theme.black.lighter};
+  /* h2 {
+    color: white;
+    font-weight: 600;
+  } */
+`;
+const BigModal2 = styled(motion.div)`
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background-color: ${props => props.theme.black.lighter};
+  /* h2 {
+    color: white;
+    font-weight: 600;
+  } */
+`;
+const BigCover = styled.img`
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  height: 400px;
+`;
+const BigCover2 = styled.img`
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  height: 400px;
+`;
+
+const BigTitle = styled.h3`
+  color: ${props => props.theme.white.lighter};
+  padding: 20px;
+  font-size: 46px;
+  position: relative;
+  top: -80px;
+`;
+const BigTitle2 = styled.h3`
+  color: ${props => props.theme.white.lighter};
+  padding: 20px;
+  font-size: 46px;
+  position: relative;
+  top: -80px;
+`;
 
 const rowVariants = {
   hidden: { x: window.outerWidth + 5 },
@@ -123,114 +185,27 @@ const rowVariants = {
 const offset = 6;
 
 function Tv() {
-  const { data: tvpopular, isLoading } = useQuery<IGetTvPResult>(
-    ["tvpopular", "popular"],
-    getTvP
-  );
-  const { data: tvrate } = useQuery<IGetTvTResult>(["tvrate", "rated"], getTvT);
+  const queries = [
+    { queryKey: "tvpopular", queryFn: getTvP },
+    { queryKey: "tvrate", queryFn: getTvT },
+  ];
 
-  const [pindex, setpIndex] = useState(0);
-  const [rindex, setrIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
-  const toggleLeaving = () => setLeaving(prev => !prev);
-  const increasePIndex = () => {
-    if (tvpopular) {
-      if (leaving) return;
-      toggleLeaving();
-      const totaltvs = tvpopular?.results.length - 1;
-      const maxIndex = Math.ceil(totaltvs / offset) - 1;
-      setpIndex(prev => (prev === maxIndex ? 0 : prev + 1));
-    }
-  };
+  const results = useQueries(queries);
+  const tvpopular = results[0].data;
+  const tvrate = results[1].data;
 
-  const increaseRIndex = () => {
-    if (tvrate) {
-      if (leaving) return;
-      toggleLeaving();
-      const totaltvs = tvrate?.results.length - 1;
-      const maxIndex = Math.ceil(totaltvs / offset) - 1;
-      setrIndex(prev => (prev === maxIndex ? 0 : prev + 1));
-    }
-  };
-
-  //console.log(tvpopular);
   return (
     <>
+      {console.log(tvpopular.results[0])}
+      {/* {console.log(tvrate)} */}
       <Wrapper>
-        {isLoading ? (
-          <Loader>Loading....</Loader>
-        ) : (
-          <>
-            <Main
-              bgPhoto={makeImagePath(tvpopular?.results[0].backdrop_path || "")}
-            >
-              <Title>{tvpopular?.results[0].name}</Title>
-              <Overview>{tvpopular?.results[0].overview}</Overview>
-            </Main>
-            {/*-------------------popular부분--------------------------------------------------------- */}
-            <Title1 onClick={increasePIndex}>Popular</Title1>
-            <Slider1>
-              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-                <Row
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  transition={{ type: "tween", duration: 0.4 }}
-                  key={pindex}
-                >
-                  {tvpopular?.results
-                    .slice(1)
-                    .slice(offset * pindex, offset * pindex + offset)
-                    .map(a => (
-                      <Box
-                        whileHover="hover"
-                        initial="normal"
-                        variants={boxVariants}
-                        key={a.id}
-                        bgPhoto={makeImagePath(a.backdrop_path)}
-                      >
-                        <Info variants={infoVariants}>
-                          <h4>{a.name}</h4>
-                        </Info>
-                      </Box>
-                    ))}
-                </Row>
-              </AnimatePresence>
-            </Slider1>
-            {/* -------------top ranked부분--------------------------------------------------------- */}
-            <Title2 onClick={increaseRIndex}>Top rated</Title2>
-            <Slider2>
-              <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
-                <Row
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  transition={{ type: "tween", duration: 0.4 }}
-                  key={rindex}
-                >
-                  {tvrate?.results
-                    .slice()
-                    .slice(offset * rindex, offset * rindex + offset)
-                    .map(b => (
-                      <Box
-                        whileHover="hover"
-                        initial="normal"
-                        variants={boxVariants}
-                        key={b.id}
-                        bgPhoto={makeImagePath(b.backdrop_path)}
-                      >
-                        <Info variants={infoVariants}>
-                          <h4>{b.name}</h4>
-                        </Info>
-                      </Box>
-                    ))}
-                </Row>
-              </AnimatePresence>
-            </Slider2>
-          </>
-        )}
+        <Main bgPhoto={makeImagePath(tvpopular.results[0].backdrop_path)}>
+          <Title>{tvpopular.results[0].name}</Title>
+          <Overview>{tvpopular.results[0].overview}</Overview>
+        </Main>
+        {/*-------------------popular부분--------------------------------------------------------- */}
+
+        {/* -------------top ranked부분--------------------------------------------------------- */}
       </Wrapper>
     </>
   );
