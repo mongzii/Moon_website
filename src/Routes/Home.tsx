@@ -1,12 +1,6 @@
-import { useQuery, useQueries } from "react-query";
+import { useQueries } from "react-query";
 import styled from "styled-components";
-import {
-  getHomeTv,
-  IGetHOMETVResult,
-  getHomeMovies,
-  IGETHOMEMOVIEResult,
-  ITv,
-} from "../api";
+import { getHomeTv, getHomeMovies, ITv } from "../api";
 import { makeImagePath } from "../utils";
 import { useState } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
@@ -14,14 +8,9 @@ import { useNavigate, useMatch } from "react-router-dom";
 
 const Wrapper = styled.div`
   background-color: black;
-  height: 300vh;
+  height: 250vh;
 `;
-// const Loader = styled.div`
-//   height: 20vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
+
 const Main = styled.div<{ bgPhoto: string }>`
   height: 100vh;
   display: flex;
@@ -202,17 +191,12 @@ function Home() {
       newArr.push(singleData);
     }
   }
-  console.log(newArr);
+  //console.log(newArr);
 
-  // //console.log(homemovie);
   const [tvindex, settvIndex] = useState(0);
   const [movieindex, setmovieIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const toggleLeaving = () => setLeaving(prev => !prev);
-  // const [leaving1, setLeaving1] = useState(false);
-  // const [leaving2, setLeaving2] = useState(false);
-  // const toggleLeaving1 = () => setLeaving1(prev => !prev);
-  // const toggleLeaving2 = () => setLeaving2(prev => !prev);
 
   const increasetvIndex = () => {
     if (leaving) return;
@@ -242,16 +226,6 @@ function Home() {
   const clicked =
     bigHomeTvMatch?.params.trendId &&
     newArr.find(el => String(el.id) === bigHomeTvMatch?.params.trendId);
-
-  // const Overlay = styled(motion.div)`
-  //   position: absolute;
-  //   top: 0;
-  //   width: 100%;
-  //   height: 100%;
-  //   /* background-color: rgba(0, 0, 0, 0.5); */
-  //   background-color: black;
-  //   opacity: 0;
-  // `;
 
   return (
     <>
@@ -375,105 +349,6 @@ function Home() {
             </>
           ) : null}
         </AnimatePresence>
-
-        {/* <Wrapper>
-        {isLoading ? (
-          <Loader>Loading...</Loader>
-        ) : (
-          <>
-            
-
-            <Title1 onClick={increasetvIndex}>Tv</Title1>
-            <Slider1>
-              <AnimatePresence initial={false} onExitComplete={toggleLeaving1}>
-                <Row1
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  key={tvindex}
-                  transition={{ type: "tween", duration: 1 }}
-                >
-                  {hometv?.results
-                    .slice(1)
-                    .slice(offset * tvindex, offset * tvindex + offset)
-                    .map(tv => (
-                      <Box1
-                        layoutId={tv.id + ""}
-                        whileHover="hover"
-                        initial="normal"
-                        variants={boxVariants}
-                        bgPhoto={makeImagePath(tv.backdrop_path, "w400")}
-                        key={tv.id}
-                        onClick={() => ontvBoxclicked(tv.id)}
-                      >
-                        <Info variants={infoVariants}>
-                          <h4>{tv.title || tv.name}</h4>
-                        </Info>
-                      </Box1>
-                    ))}
-                </Row1>
-              </AnimatePresence>
-            </Slider1>
-            <AnimatePresence>
-              {bigHomeTvMatch ? (
-                <>
-                  <Overlay
-                    onClick={onOverlayClick}
-                    exit={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  />
-                  <motion.div
-                    layoutId={bigHomeTvMatch.params.trendTvId}
-                    style={{
-                      position: "absolute",
-                      width: "40vw",
-                      height: "80vh",
-                      backgroundColor: "red",
-                      top: scrollY.get() + 100,
-                      left: 0,
-                      right: 0,
-                      margin: "0 auto",
-                    }}
-                  />
-                </>
-              ) : null}
-            </AnimatePresence>
-
-            <Title2 onClick={increasemoviIndex}>Movies</Title2>
-            <Slider2>
-              <AnimatePresence initial={false} onExitComplete={toggleLeaving2}>
-                <Row2
-                  variants={rowVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  key={movieindex}
-                  transition={{ type: "tween", duration: 1 }}
-                >
-                  {homemovie?.results
-                    .slice(1)
-                    .slice(offset * movieindex, offset * movieindex + offset)
-                    .map(movie => (
-                      <Box2
-                        whileHover="hover"
-                        initial="normal"
-                        variants={boxVariants}
-                        bgPhoto={makeImagePath(movie.backdrop_path, "w400")}
-                        key={movie.id}
-                        onClick={() => onmovieBoxclicked(movie.id)}
-                      >
-                        <Info variants={infoVariants}>
-                          <h4>{movie.title}</h4>
-                        </Info>
-                      </Box2>
-                    ))}
-                </Row2>
-              </AnimatePresence>
-            </Slider2>
-          </>
-        )}
-      </Wrapper> */}
       </Wrapper>
     </>
   );

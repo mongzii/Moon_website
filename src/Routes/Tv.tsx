@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import { useQuery, useQueries } from "react-query";
-import { IGetTvPResult, IGetTvTResult, getTvP, getTvT, ITv } from "../api";
+import { useQueries } from "react-query";
+import { getTvP, getTvT, ITv } from "../api";
 import { makeImagePath } from "../utils";
 import { useState } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
-import { useMatch, useNavigate, useParams } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   background-color: black;
-  height: 300vh;
+  height: 250vh;
 `;
 
 const Main = styled.div<{ bgPhoto: string }>`
