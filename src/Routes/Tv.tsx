@@ -24,16 +24,18 @@ const Main = styled.div<{ bgPhoto: string }>`
 
 const Title = styled.h3`
   font-size: 60px;
+  font-weight: 500;
   margin-bottom: 20px;
   width: 70%;
   color: white;
 `;
 const Overview = styled.p`
-  font-size: 20px;
+  font-size: 30px;
   width: 50%;
 `;
 const Title1 = styled.h3`
   font-size: 38px;
+  font-weight: 450;
   color: white;
   position: relative;
   top: -120px;
@@ -107,10 +109,12 @@ const infoVariants = {
 
 const Title2 = styled.h3`
   font-size: 38px;
+  font-weight: 450;
   color: white;
   position: relative;
   top: 240px;
   padding-left: 20px;
+  cursor: pointer;
 `;
 const Slider2 = styled.div`
   position: relative;

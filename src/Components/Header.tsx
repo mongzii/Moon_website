@@ -160,7 +160,7 @@ function Header() {
             </Item>
             <Item>
               <Link to="/tv">
-                Tv shows{tvMatch && <Circle layoutId="circle" />}
+                Tv-show{tvMatch && <Circle layoutId="circle" />}
               </Link>
             </Item>
           </Items>

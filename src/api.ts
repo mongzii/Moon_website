@@ -7,6 +7,7 @@ export interface ITv {
   backdrop_path: string; //배경사진
   poster_path: string; //포스터사진
   name: string; //제목
+  title: string;
   overview: string; //줄거리
 }
 export interface IGetTvPResult {
