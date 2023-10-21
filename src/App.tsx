@@ -2,8 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
-// import Tv from "./Routes/Tv";
-import TvShow from "./Routes/TvShow";
 import Tv from "./Routes/Tv";
 import Search from "./Routes/Search";
 import Home from "./Routes/Home";
