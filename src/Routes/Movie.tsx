@@ -6,6 +6,7 @@ import { makeImagePath } from "../utils";
 import { useState } from "react";
 import { useNavigate, useMatch } from "react-router-dom";
 
+const BREAK_POINT_PC = 1025;
 const Wrapper = styled.div`
   background-color: black;
   height: 250vh;
@@ -17,10 +18,18 @@ const Main = styled.div<{ bgPhoto: string }>`
   flex-direction: column;
   justify-content: center;
   padding: 60px;
-  background-size: cover;
+  /* background-size: cover; */
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 1)),
     //gradient는 이미지가 글자가려서 넣은거다
     url(${props => props.bgPhoto});
+  @media only screen and (min-width: ${BREAK_POINT_PC}px) {
+    background-size: cover;
+  }
+  @media not screen and (min-width: ${BREAK_POINT_PC}px) {
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
 `;
 const Title = styled.h3`
   font-size: 60px;

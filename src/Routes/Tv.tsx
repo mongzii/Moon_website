@@ -6,6 +6,7 @@ import { useState } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useMatch, useNavigate } from "react-router-dom";
 
+const BREAK_POINT_PC = 1025;
 const Wrapper = styled.div`
   background-color: black;
   height: 250vh;
@@ -19,7 +20,15 @@ const Main = styled.div<{ bgPhoto: string }>`
   padding: 60px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 1)),
     url(${props => props.bgPhoto});
-  background-size: cover;
+  /* background-size: cover; */
+  @media only screen and (min-width: ${BREAK_POINT_PC}px) {
+    background-size: cover;
+  }
+  @media not screen and (min-width: ${BREAK_POINT_PC}px) {
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
 `;
 
 const Title = styled.h3`

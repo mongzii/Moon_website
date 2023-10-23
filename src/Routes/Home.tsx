@@ -6,6 +6,10 @@ import { useState } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useNavigate, useMatch } from "react-router-dom";
 
+const BREAK_POINT_PHONE = 378;
+const BREAK_POINT_TABLET = 768;
+//const BREAK_POINT_PC = 1025;
+
 const Wrapper = styled.div`
   background-color: black;
   height: 250vh;
@@ -17,23 +21,56 @@ const Main = styled.div<{ bgPhoto: string }>`
   flex-direction: column;
   justify-content: flex-end;
   padding: 60px;
-  background-size: cover;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 1)),
     url(${props => props.bgPhoto});
+
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    background-size: cover;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    background-position: center;
+    background-size: cover;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    background-position: center;
+    background-size: cover;
+  }
 `;
 const Greeting = styled.h2`
-  font-size: 70px;
   color: gray;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 70px;
+    font-weight: 450;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 50px;
+    font-weight: 500;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 40px;
+    font-weight: 600;
+  }
 `;
 
 const Title1 = styled.h3`
-  font-size: 38px;
   font-weight: 450;
   color: white;
   position: relative;
   top: 120px;
   padding-left: 20px;
   cursor: pointer;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+    font-weight: 500;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
 `;
 const Slider1 = styled.div`
   position: relative;
@@ -46,16 +83,17 @@ const Row1 = styled(motion.div)`
   width: 100%;
   position: absolute;
 `;
+
 const rowVariants = {
   hidden: { x: window.outerWidth + 5 },
   visible: { x: 0 },
   exit: { x: -window.outerWidth - 5 },
 };
 const Box1 = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: white;
+  /* background-color: white; */
   height: 200px;
   cursor: pointer;
-  font-size: 40px;
+  //font-size: 40px;
   background-image: url(${props => props.bgPhoto});
   background-size: cover;
   background-position: center center;
@@ -102,14 +140,26 @@ const infoVariants = {
     },
   },
 };
+
 const Title2 = styled.h3`
-  font-size: 38px;
   font-weight: 450;
   color: white;
   position: relative;
   top: 480px;
   padding-left: 20px;
   cursor: pointer;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+    font-weight: 500;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
 `;
 const Slider2 = styled.div`
   position: relative;
@@ -133,13 +183,25 @@ const Overlay = styled(motion.div)`
 `;
 const BigModal = styled(motion.div)`
   position: absolute;
-  width: 40vw;
-  height: 80vh;
+  //width: 40vw;
+  //height: 80vh;
   left: 0;
   right: 0;
   margin: 0 auto;
-  background-color: ${props => props.theme.black.lighter};
+  //background-color: ${props => props.theme.black.lighter};
   z-index: 7;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    width: 40vw;
+    height: 80vh;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    width: 30vw;
+    height: 50vh;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    width: 20vw;
+    height: 40vh;
+  }
 `;
 const BigCover = styled.img`
   width: 100%;
@@ -151,16 +213,41 @@ const BigCover = styled.img`
 const BigTitle = styled.h3`
   color: ${props => props.theme.white.lighter};
   padding: 20px;
-  font-size: 36px;
+  /* font-size: 36px; */
   font-weight: 600;
   position: relative;
   top: -80px;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    /* background-color: white; */
+    color: blue;
+    font-size: 38px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 30px;
+    color: red;
+  }
+  /* @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 27px;
+    color: red;
+  } */
 `;
 const BigOverview = styled.p`
   color: ${props => props.theme.white.lighter};
   top: -80px;
   position: relative;
   padding: 20px;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    height: 50vh;
+    font-size: 24px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    height: 60vh;
+    font-size: 22px;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    height: 80vh;
+    font-size: 22px;
+  }
 `;
 const offset = 6;
 
