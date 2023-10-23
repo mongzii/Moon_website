@@ -122,20 +122,7 @@ const Row2 = styled(motion.div)`
   width: 100%;
   position: absolute;
 `;
-const Box2 = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: white;
-  height: 200px;
-  cursor: pointer;
-  background-image: url(${props => props.bgPhoto});
-  background-size: cover;
-  background-position: center center;
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-`;
+
 const Overlay = styled(motion.div)`
   position: fixed;
   top: 0;
@@ -300,7 +287,7 @@ function Home() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              transition={{ type: "tween", duration: 0.4 }}
+              transition={{ type: "tween", duration: 1 }}
               key={movieindex}
             >
               {newArr

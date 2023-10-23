@@ -61,7 +61,6 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   background-position: center center;
   cursor: pointer;
   height: 200px;
-  /* color: red; */
   font-size: 40px;
   &:first-child {
     transform-origin: center left;
@@ -240,7 +239,7 @@ function Tv() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              transition={{ type: "tween", duration: 0.4 }}
+              transition={{ type: "tween", duration: 1 }}
               key={pIndex}
             >
               {newArr
@@ -298,7 +297,7 @@ function Tv() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              transition={{ type: "tween", duration: 0.4 }}
+              transition={{ type: "tween", duration: 1 }}
               key={rIndex}
             >
               {newArr
