@@ -52,8 +52,8 @@ const Greeting = styled.h2`
 `;
 
 const Title1 = styled.h3`
-  font-weight: 450;
-  color: white;
+  //font-weight: 450;
+  color: ${props => props.theme.white.darker};
   position: relative;
   top: 120px;
   padding-left: 20px;
@@ -67,7 +67,7 @@ const Title1 = styled.h3`
     font-weight: 400;
   }
   @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
-    font-size: 34px;
+    font-size: 20px;
     font-weight: 400;
   }
 `;
@@ -140,7 +140,7 @@ const infoVariants = {
 
 const Title2 = styled.h3`
   font-weight: 450;
-  color: white;
+  color: ${props => props.theme.white.darker};
   position: relative;
   top: 480px;
   padding-left: 20px;
@@ -154,7 +154,7 @@ const Title2 = styled.h3`
     font-weight: 400;
   }
   @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
-    font-size: 34px;
+    font-size: 20px;
     font-weight: 400;
   }
 `;
@@ -183,6 +183,7 @@ const BigModal = styled(motion.div)`
   left: 0;
   right: 0;
   margin: 0 auto;
+  border-radius: 5px;
   z-index: 7;
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     width: 40vw;
@@ -206,10 +207,12 @@ const BigCover = styled.img`
 
 const BigTitle = styled.h3`
   color: ${props => props.theme.white.lighter};
-  padding: 20px;
+  padding-bottom: 10px;
+  padding-left: 10px;
   font-weight: 600;
   position: relative;
   top: -80px;
+
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     font-size: 38px;
   }
