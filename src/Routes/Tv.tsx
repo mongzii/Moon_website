@@ -237,7 +237,12 @@ function Tv() {
       <Wrapper>
         <Main bgPhoto={makeImagePath(newArr[0]?.backdrop_path)}>
           <Title>{newArr[0]?.name}</Title>
-          <Overview>{newArr[0]?.overview}</Overview>
+          {/* <Overview>{newArr[0]?.overview}</Overview> */}
+          <Overview>
+            {newArr[0]?.overview.length > 100
+              ? `${newArr[0]?.overview.slice(0, 100)}....`
+              : newArr[0]?.overview}
+          </Overview>
         </Main>
         {/* -------------------popular부분--------------------------------------------------------- */}
         <Title1 onClick={incPIndex}>Popular</Title1>
