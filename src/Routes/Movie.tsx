@@ -28,14 +28,14 @@ const Main = styled.div<{ bgPhoto: string }>`
   }
   @media only screen and (max-width: ${BREAK_POINT_TABLET}px) {
     background-position: center;
-    //background-size: cover;
     background-size: 100%;
     background-repeat: no-repeat;
   }
 `;
 const Title = styled.h3`
-  //font-size: 60px;
+  font-weight: 500;
   margin-bottom: 20px;
+  width: 70%;
   color: ${props => props.theme.white.darker};
 
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
@@ -65,6 +65,7 @@ const Title1 = styled.h3`
   position: relative;
   top: -120px;
   padding-left: 20px;
+  cursor: pointer;
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     font-size: 38px;
     font-weight: 500;
@@ -88,6 +89,7 @@ const Title2 = styled.h3`
   position: relative;
   top: 240px;
   padding-left: 20px;
+  cursor: pointer;
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     font-size: 38px;
     font-weight: 500;
@@ -107,7 +109,6 @@ const Slider2 = styled.div`
   top: 260px;
 `;
 const Box2 = styled(motion.div)<{ bgPhoto: string }>`
-  background-color: white;
   background-image: url(${props => props.bgPhoto});
   background-size: cover;
   background-position: center center;
@@ -201,15 +202,12 @@ const Overlay = styled(motion.div)`
   opacity: 0;
 `;
 const BigMovie = styled(motion.div)`
-  //width: 40vw;
-  //height: 80vh;
   position: absolute;
   left: 0;
   right: 0;
   margin: 0 auto;
   border-radius: 5px;
   // overflow: hidden;
-  //background-color: ${props => props.theme.black.lighter};
   z-index: 7;
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     width: 40vw;
@@ -227,7 +225,6 @@ const BigMovie = styled(motion.div)`
 //overlay의 사진부분
 const BigCover = styled.div`
   width: 100%;
-  //height: 350px;
   height: 400px;
   background-size: cover;
   background-position: center center;
@@ -241,12 +238,15 @@ const BigTitle = styled.h3`
   top: -60px;
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     font-size: 38px;
+    font-weight: 550;
   }
   @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
     font-size: 30px;
+    font-weight: 550;
   }
   @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
     font-size: 28px;
+    font-weight: 540;
   }
 `;
 const BigOverview = styled.p`

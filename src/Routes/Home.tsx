@@ -36,10 +36,10 @@ const Main = styled.div<{ bgPhoto: string }>`
   }
 `;
 const Greeting = styled.h2`
-  color: gray;
+  color: ${props => props.theme.gray.darker};
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     font-size: 70px;
-    font-weight: 450;
+    font-weight: 520;
   }
   @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
     font-size: 50px;
@@ -52,7 +52,6 @@ const Greeting = styled.h2`
 `;
 
 const Title1 = styled.h3`
-  //font-weight: 450;
   color: ${props => props.theme.white.darker};
   position: relative;
   top: 120px;
@@ -139,7 +138,6 @@ const infoVariants = {
 };
 
 const Title2 = styled.h3`
-  font-weight: 450;
   color: ${props => props.theme.white.darker};
   position: relative;
   top: 480px;
@@ -209,18 +207,20 @@ const BigTitle = styled.h3`
   color: ${props => props.theme.white.lighter};
   padding-bottom: 10px;
   padding-left: 10px;
-  font-weight: 600;
   position: relative;
   top: -80px;
 
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     font-size: 38px;
+    font-weight: 550;
   }
   @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
     font-size: 30px;
+    font-weight: 550;
   }
   @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
     font-size: 28px;
+    font-weight: 540;
   }
 `;
 const BigOverview = styled.p`

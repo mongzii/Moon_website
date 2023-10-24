@@ -6,7 +6,9 @@ import { useState } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useMatch, useNavigate } from "react-router-dom";
 
-const BREAK_POINT_PC = 1025;
+const BREAK_POINT_PHONE = 378;
+const BREAK_POINT_TABLET = 768;
+
 const Wrapper = styled.div`
   background-color: black;
   height: 250vh;
@@ -20,11 +22,11 @@ const Main = styled.div<{ bgPhoto: string }>`
   padding: 60px;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 1)),
     url(${props => props.bgPhoto});
-  /* background-size: cover; */
-  @media only screen and (min-width: ${BREAK_POINT_PC}px) {
+
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     background-size: cover;
   }
-  @media not screen and (min-width: ${BREAK_POINT_PC}px) {
+  @media only screen and (max-width: ${BREAK_POINT_TABLET}px) {
     background-position: center;
     background-size: 100%;
     background-repeat: no-repeat;
@@ -32,24 +34,50 @@ const Main = styled.div<{ bgPhoto: string }>`
 `;
 
 const Title = styled.h3`
-  font-size: 60px;
   font-weight: 500;
   margin-bottom: 20px;
   width: 70%;
-  color: white;
+  color: ${props => props.theme.white.darker};
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 60px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 50px;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 40px;
+  }
 `;
 const Overview = styled.p`
-  font-size: 30px;
   width: 50%;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 25px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 20px;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 10px;
+  }
 `;
 const Title1 = styled.h3`
-  font-size: 38px;
-  font-weight: 450;
-  color: white;
+  color: ${props => props.theme.white.darker};
   position: relative;
   top: -120px;
   padding-left: 20px;
   cursor: pointer;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+    font-weight: 500;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 20px;
+    font-weight: 400;
+  }
 `;
 const Slider1 = styled.div`
   position: relative;
@@ -64,13 +92,12 @@ const Row = styled(motion.div)`
 `;
 
 const Box = styled(motion.div)<{ bgPhoto: string }>`
-  /* background-color: white; */
   background-image: url(${props => props.bgPhoto});
   background-size: cover;
   background-position: center center;
   cursor: pointer;
   height: 200px;
-  font-size: 40px;
+
   &:first-child {
     transform-origin: center left;
   }
@@ -116,13 +143,23 @@ const infoVariants = {
 };
 
 const Title2 = styled.h3`
-  font-size: 38px;
-  font-weight: 450;
-  color: white;
+  color: ${props => props.theme.white.darker};
   position: relative;
   top: 240px;
   padding-left: 20px;
   cursor: pointer;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+    font-weight: 500;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 20px;
+    font-weight: 400;
+  }
 `;
 const Slider2 = styled.div`
   position: relative;
@@ -138,13 +175,24 @@ const Overlay = styled(motion.div)`
 `;
 const BigModal = styled(motion.div)`
   position: absolute;
-  width: 40vw;
-  height: 80vh;
   left: 0;
   right: 0;
   margin: 0 auto;
-  background-color: ${props => props.theme.black.lighter};
+  border-radius: 5px;
+  //background-color: ${props => props.theme.black.lighter};
   z-index: 7;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    width: 40vw;
+    height: 80vh;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    width: 40%;
+    height: 50vh;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    width: 60%;
+    height: 40vh;
+  }
 `;
 
 const BigCover = styled.img`
@@ -156,17 +204,38 @@ const BigCover = styled.img`
 
 const BigTitle = styled.h3`
   color: ${props => props.theme.white.lighter};
-  padding: 20px;
-  font-size: 36px;
-  font-weight: 600;
+  padding-bottom: 10px;
+  padding-left: 10px;
   position: relative;
   top: -80px;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+    font-weight: 550;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 30px;
+    font-weight: 550;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 28px;
+    font-weight: 540;
+  }
 `;
 const BigOverview = styled.p`
   color: ${props => props.theme.white.lighter};
   top: -80px;
   position: relative;
-  padding: 20px;
+  padding: 25px;
+  background-color: ${props => props.theme.black.lighter};
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 24px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 22px;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 22px;
+  }
 `;
 
 const rowVariants = {
@@ -237,7 +306,6 @@ function Tv() {
       <Wrapper>
         <Main bgPhoto={makeImagePath(newArr[0]?.backdrop_path)}>
           <Title>{newArr[0]?.name}</Title>
-          {/* <Overview>{newArr[0]?.overview}</Overview> */}
           <Overview>
             {newArr[0]?.overview.length > 100
               ? `${newArr[0]?.overview.slice(0, 100)}....`
