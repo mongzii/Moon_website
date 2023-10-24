@@ -8,7 +8,6 @@ import { useNavigate, useMatch } from "react-router-dom";
 
 const BREAK_POINT_PHONE = 378;
 const BREAK_POINT_TABLET = 768;
-//const BREAK_POINT_PC = 1025;
 
 const Wrapper = styled.div`
   background-color: black;
@@ -90,10 +89,8 @@ const rowVariants = {
   exit: { x: -window.outerWidth - 5 },
 };
 const Box1 = styled(motion.div)<{ bgPhoto: string }>`
-  /* background-color: white; */
   height: 200px;
   cursor: pointer;
-  //font-size: 40px;
   background-image: url(${props => props.bgPhoto});
   background-size: cover;
   background-position: center center;
@@ -183,23 +180,20 @@ const Overlay = styled(motion.div)`
 `;
 const BigModal = styled(motion.div)`
   position: absolute;
-  //width: 40vw;
-  //height: 80vh;
   left: 0;
   right: 0;
   margin: 0 auto;
-  //background-color: ${props => props.theme.black.lighter};
   z-index: 7;
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     width: 40vw;
     height: 80vh;
   }
   @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
-    width: 30vw;
+    width: 40%;
     height: 50vh;
   }
   @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
-    width: 20vw;
+    width: 60%;
     height: 40vh;
   }
 `;
@@ -213,39 +207,32 @@ const BigCover = styled.img`
 const BigTitle = styled.h3`
   color: ${props => props.theme.white.lighter};
   padding: 20px;
-  /* font-size: 36px; */
   font-weight: 600;
   position: relative;
   top: -80px;
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
-    /* background-color: white; */
-    color: blue;
     font-size: 38px;
   }
   @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
     font-size: 30px;
-    color: red;
   }
-  /* @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
-    font-size: 27px;
-    color: red;
-  } */
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 28px;
+  }
 `;
 const BigOverview = styled.p`
   color: ${props => props.theme.white.lighter};
   top: -80px;
   position: relative;
-  padding: 20px;
+  padding: 25px;
+  background-color: ${props => props.theme.black.lighter};
   @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
-    height: 50vh;
     font-size: 24px;
   }
   @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
-    height: 60vh;
     font-size: 22px;
   }
   @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
-    height: 80vh;
     font-size: 22px;
   }
 `;
