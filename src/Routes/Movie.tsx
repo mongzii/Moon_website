@@ -6,7 +6,9 @@ import { makeImagePath } from "../utils";
 import { useState } from "react";
 import { useNavigate, useMatch } from "react-router-dom";
 
-const BREAK_POINT_PC = 1025;
+const BREAK_POINT_PHONE = 378;
+const BREAK_POINT_TABLET = 768;
+
 const Wrapper = styled.div`
   background-color: black;
   height: 250vh;
@@ -18,33 +20,63 @@ const Main = styled.div<{ bgPhoto: string }>`
   flex-direction: column;
   justify-content: center;
   padding: 60px;
-  /* background-size: cover; */
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 1)),
     //gradient는 이미지가 글자가려서 넣은거다
     url(${props => props.bgPhoto});
-  @media only screen and (min-width: ${BREAK_POINT_PC}px) {
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
     background-size: cover;
   }
-  @media not screen and (min-width: ${BREAK_POINT_PC}px) {
+  @media only screen and (max-width: ${BREAK_POINT_TABLET}px) {
     background-position: center;
+    //background-size: cover;
     background-size: 100%;
     background-repeat: no-repeat;
   }
 `;
 const Title = styled.h3`
-  font-size: 60px;
+  //font-size: 60px;
   margin-bottom: 20px;
+  color: ${props => props.theme.white.darker};
+
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 60px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 50px;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 40px;
+  }
 `;
 const Overview = styled.p`
-  font-size: 30px;
   width: 50%;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 25px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 20px;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 10px;
+  }
 `;
 const Title1 = styled.h3`
-  color: white;
-  font-size: 24px;
+  color: ${props => props.theme.white.darker};
   position: relative;
   top: -120px;
   padding-left: 20px;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+    font-weight: 500;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 20px;
+    font-weight: 400;
+  }
 `;
 const Slider1 = styled.div`
   position: relative;
@@ -52,16 +84,26 @@ const Slider1 = styled.div`
 `;
 
 const Title2 = styled.h3`
-  color: white;
-  font-size: 24px;
+  color: ${props => props.theme.white.darker};
   position: relative;
   top: 240px;
   padding-left: 20px;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+    font-weight: 500;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 20px;
+    font-weight: 400;
+  }
 `;
 
 const Slider2 = styled.div`
   position: relative;
-  /* margin-top: 200px; */
   top: 260px;
 `;
 const Box2 = styled(motion.div)<{ bgPhoto: string }>`
@@ -79,11 +121,22 @@ const Box2 = styled(motion.div)<{ bgPhoto: string }>`
   }
 `;
 const Title3 = styled.h3`
-  color: white;
-  font-size: 24px;
+  color: ${props => props.theme.white.darker};
   position: relative;
   top: 600px;
   padding-left: 20px;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+    font-weight: 500;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 34px;
+    font-weight: 400;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 20px;
+    font-weight: 400;
+  }
 `;
 const Slider3 = styled.div`
   position: relative;
@@ -148,37 +201,69 @@ const Overlay = styled(motion.div)`
   opacity: 0;
 `;
 const BigMovie = styled(motion.div)`
-  width: 40vw;
-  height: 80vh;
+  //width: 40vw;
+  //height: 80vh;
   position: absolute;
   left: 0;
   right: 0;
   margin: 0 auto;
   border-radius: 5px;
-  overflow: hidden;
-  background-color: ${props => props.theme.black.lighter};
+  // overflow: hidden;
+  //background-color: ${props => props.theme.black.lighter};
   z-index: 7;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    width: 40vw;
+    height: 80vh;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    width: 40%;
+    height: 50vh;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    width: 60%;
+    height: 40vh;
+  }
 `;
 //overlay의 사진부분
 const BigCover = styled.div`
   width: 100%;
-  height: 350px;
+  //height: 350px;
+  height: 400px;
   background-size: cover;
   background-position: center center;
 `;
 
 const BigTitle = styled.h3`
   color: ${props => props.theme.white.lighter};
-  padding: 10px;
-  font-size: 30px;
+  padding-bottom: 10px;
+  padding-left: 10px;
   position: relative;
   top: -60px;
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 38px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 30px;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 28px;
+  }
 `;
 const BigOverview = styled.p`
   color: ${props => props.theme.white.lighter};
   top: -60px;
   position: relative;
-  padding: 20px;
+  padding: 25px;
+  background-color: ${props => props.theme.black.lighter};
+  @media only screen and (min-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 24px;
+  }
+  @media only screen and (min-width: ${BREAK_POINT_PHONE}px) and (max-width: ${BREAK_POINT_TABLET}px) {
+    font-size: 22px;
+  }
+  @media only screen and (max-width: ${BREAK_POINT_PHONE}px) {
+    font-size: 22px;
+  }
 `;
 
 const rowVariants = {
@@ -274,7 +359,11 @@ function Movie() {
       <Wrapper>
         <Main bgPhoto={makeImagePath(newArr[0]?.backdrop_path || "")}>
           <Title>{newArr[0]?.title}</Title>
-          <Overview>{newArr[0]?.overview}</Overview>
+          <Overview>
+            {newArr[0]?.overview.length > 100
+              ? `${newArr[0]?.overview.slice(0, 100)}....`
+              : newArr[0]?.overview}{" "}
+          </Overview>
         </Main>
         {/* -------------popular부분--------------------------------------------------------- */}
         <Title1 onClick={increasePIndex}>Popular</Title1>
@@ -319,8 +408,8 @@ function Movie() {
                 animate={{ opacity: 1 }}
               />
               <BigMovie
-                style={{ top: scrollY.get() + 100 }}
                 layoutId={bigMovieMatch.params.movieId}
+                style={{ top: scrollY.get() + 100 }}
               >
                 {clicked && (
                   <>
@@ -383,8 +472,8 @@ function Movie() {
                 animate={{ opacity: 1 }}
               />
               <BigMovie
-                style={{ top: scrollY.get() + 100 }}
                 layoutId={bigMovieMatch.params.movieId}
+                style={{ top: scrollY.get() + 100 }}
               >
                 {clicked && (
                   <>
@@ -447,8 +536,8 @@ function Movie() {
                 animate={{ opacity: 1 }}
               />
               <BigMovie
-                style={{ top: scrollY.get() + 100 }}
                 layoutId={bigMovieMatch.params.movieId}
+                style={{ top: scrollY.get() + 100 }}
               >
                 {clicked && (
                   <>
