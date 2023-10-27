@@ -12,6 +12,7 @@ const BREAK_POINT_TABLET = 768;
 const Wrapper = styled.div`
   background-color: black;
   height: 250vh;
+  width: 100%;
 `;
 
 const Main = styled.div<{ bgPhoto: string }>`

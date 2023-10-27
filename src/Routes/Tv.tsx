@@ -360,7 +360,7 @@ function Tv() {
                 {clicked && (
                   <>
                     <BigCover
-                      src={makeImagePath(clicked.backdrop_path, "w500")}
+                      src={makeImagePath(clicked.backdrop_path, "w300")}
                     />
                     <BigTitle>{clicked.name}</BigTitle>
                     <BigOverview>{clicked.overview}</BigOverview>
