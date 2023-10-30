@@ -2,7 +2,7 @@ import { useQueries } from "react-query";
 import styled from "styled-components";
 import { getHomeTv, getHomeMovies, ITv } from "../api";
 import { makeImagePath } from "../utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useNavigate, useMatch } from "react-router-dom";
 
@@ -294,11 +294,6 @@ function Home() {
   const clicked =
     bigHomeTvMatch?.params.trendId &&
     newArr.find(el => String(el.id) === bigHomeTvMatch?.params.trendId);
-
-  //페이지 맨위이동시 맨위스크롤
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
 
   return (
     <>
