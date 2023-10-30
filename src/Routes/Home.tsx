@@ -8,15 +8,17 @@ import { useNavigate, useMatch } from "react-router-dom";
 
 const BREAK_POINT_PHONE = 378;
 const BREAK_POINT_TABLET = 768;
+const BREAK_POINT_PC = 1025;
 
 const Wrapper = styled.div`
   background-color: black;
   height: 250vh;
-  width: 100%;
 `;
 
 const Main = styled.div<{ bgPhoto: string }>`
   height: 100vh;
+  width: 100%;
+  //border: 10px solid red;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -77,10 +79,11 @@ const Slider1 = styled.div`
 `;
 const Row1 = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 5px;
   width: 100%;
   position: absolute;
+  //position: relative;
 `;
 
 const rowVariants = {
@@ -119,8 +122,11 @@ const Info = styled(motion.div)`
   padding: 10px;
   background-color: ${props => props.theme.black.lighter};
   opacity: 0;
-  position: absolute;
+  //position: absolute;
+
+  position: static;
   width: 100%;
+
   bottom: 0;
   h4 {
     text-align: center;
@@ -163,7 +169,8 @@ const Slider2 = styled.div`
 `;
 const Row2 = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  //grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 5px;
   width: 100%;
   position: absolute;
@@ -240,7 +247,7 @@ const BigOverview = styled.p`
     font-size: 22px;
   }
 `;
-const offset = 6;
+const offset = 5;
 
 function Home() {
   const queries = [
@@ -419,3 +426,211 @@ function Home() {
   );
 }
 export default Home;
+
+// const Wrapper = styled.div`
+//   //background-color: black;
+//   height: 250vh;
+// `;
+// const Main = styled.div<{ bgPhoto: string }>`
+//   border: 1px solid red;
+//   height: 100vh;
+//   width: 100vw;
+//   background-size: cover;
+//   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 1)),
+//     url(${props => props.bgPhoto});
+// `;
+
+// const Greeting = styled.h2`
+//   color: ${props => props.theme.gray.darker};
+// `;
+// const Body = styled.div`
+//   border: 10px solid green;
+//   height: 100vh;
+//   width: 100vw;
+//   background-color: black;
+// `;
+// const Title1 = styled.h3`
+//   color: ${props => props.theme.white.darker};
+// `;
+// const Slider1 = styled.div`
+//   position: relative;
+//   top: 150px;
+// `;
+// const Row1 = styled(motion.div)`
+//   display: grid;
+//   grid-template-columns: repeat(6, 1fr);
+//   gap: 5px;
+//   width: 100%;
+//   position: absolute;
+// `;
+// const rowVariants = {
+//   hidden: { x: window.outerWidth + 5 },
+//   visible: { x: 0 },
+//   exit: { x: -window.outerWidth - 5 },
+// };
+// const Box = styled(motion.div)<{ bgPhoto: string }>`
+//   background-color: white;
+//   height: 200px;
+//   background-image: url(${props => props.bgPhoto});
+//   background-size: cover;
+//   background-position: center center;
+// `;
+// const Box1 = styled(motion.div)<{ bgPhoto: string }>`
+//   height: 200px;
+//   cursor: pointer;
+//   background-image: url(${props => props.bgPhoto});
+//   background-size: cover;
+//   background-position: center center;
+//   &:first-child {
+//     transform-origin: center left;
+//   }
+//   &:last-child {
+//     transform-origin: center right;
+//   }
+// `;
+// const boxVariants = {
+//   normal: {
+//     scale: 1,
+//   },
+//   hover: {
+//     scale: 1.3,
+//     y: -80,
+//     transition: {
+//       delay: 0.5,
+//       duration: 0.1,
+//       type: "tween",
+//     },
+//   },
+// };
+// const Title2 = styled.h3`
+//   color: ${props => props.theme.white.darker};
+// `;
+// const Info = styled(motion.div)`
+//   padding: 10px;
+//   background-color: ${props => props.theme.black.lighter};
+//   opacity: 1;
+//   //position: absolute;
+//   position: static;
+//   width: 100%;
+//   bottom: 0;
+//   h4 {
+//     text-align: center;
+//     font-size: 18px;
+//   }
+// `;
+// // const Info = styled.div`
+// //   padding: 10px;
+// //   background-color: ${props => props.theme.black.lighter};
+// //   width: 100%;
+// // `;
+// const infoVariants = {
+//   hover: {
+//     opacity: 1,
+//     transition: {
+//       delay: 0.5,
+//       duration: 0.1,
+//       type: "tween",
+//     },
+//   },
+// };
+// const offset = 6;
+// function Home() {
+//   const queries = [
+//     { queryKey: "hometv", queryFn: getHomeTv },
+//     { queryKey: "homemovie", queryFn: getHomeMovies },
+//   ];
+//   const results = useQueries(queries);
+//   //새로 데이터 가공했다.
+//   let newArr: ITv[] = [];
+//   for (let i = 0; i < results.length; i++) {
+//     for (let j = 0; j < results[i]?.data?.results.length; j++) {
+//       const singleData = results[i]?.data?.results[j];
+//       newArr.push(singleData);
+//     }
+//   }
+//   const [tvindex, settvIndex] = useState(0);
+//   const [movieindex, setmovieIndex] = useState(0);
+//   const [leaving, setLeaving] = useState(false);
+//   const toggleLeaving = () => setLeaving(prev => !prev);
+
+//   // model관련
+//   const navigate = useNavigate();
+//   const onBoxclicked = (trendId: number) => {
+//     navigate(`/trends/${trendId}`);
+//   };
+//   return (
+//     <>
+//       <Wrapper>
+//         <Main bgPhoto={makeImagePath(newArr[0]?.backdrop_path)}>
+//           <Greeting>Welcome to the MoonFlix</Greeting>
+//         </Main>
+//         <Body>
+//           <Title1>Tv</Title1>
+//           <Slider1>
+//             <Row1
+//               variants={rowVariants}
+//               initial="hidden"
+//               animate="visible"
+//               exit="exit"
+//               key={tvindex}
+//               transition={{ type: "tween", duration: 1 }}
+//             >
+//               {newArr
+//                 .slice(0, 20)
+//                 .slice(offset * tvindex, offset * tvindex + offset)
+//                 .map((el: ITv) => (
+//                   <Box1
+//                     layoutId={el.id + ""}
+//                     whileHover="hover"
+//                     initial="normal"
+//                     variants={boxVariants}
+//                     key={el.id}
+//                     bgPhoto={makeImagePath(el.backdrop_path)}
+//                     onClick={() => onBoxclicked(el.id)}
+//                   >
+//                     <Info>
+//                       <h4>{el.name || el.title}</h4>
+//                     </Info>
+//                   </Box1>
+//                 ))}
+//             </Row1>
+//           </Slider1>
+//           {/* <Slider1>
+//             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
+
+//               <Row1
+//                 variants={rowVariants}
+//                 initial="hidden"
+//                 animate="visible"
+//                 exit="exit"
+//                 key={tvindex}
+//                 transition={{ type: "tween", duration: 1 }}
+//               >
+//                 {newArr
+//                   .slice(0, 20)
+//                   .slice(offset * tvindex, offset * tvindex + offset)
+//                   .map((el: ITv) => (
+//                     <Box1
+//                       layoutId={el.id + ""}
+//                       whileHover="hover"
+//                       initial="normal"
+//                       variants={boxVariants}
+//                       key={el.id}
+//                       bgPhoto={makeImagePath(el.backdrop_path)}
+//                       onClick={() => onBoxclicked(el.id)}
+//                     >
+//                       <Info variants={infoVariants}>
+//                         <h4>{el.name || el.title}</h4>
+//                       </Info>
+//                     </Box1>
+//                   ))}
+//               </Row1>
+//             </AnimatePresence>
+//           </Slider1> */}
+//           <Title2>Movies</Title2>
+//         </Body>
+//       </Wrapper>
+//     </>
+//   );
+// }
+// export default Home;

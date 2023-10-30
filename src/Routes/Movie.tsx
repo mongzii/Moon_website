@@ -175,7 +175,8 @@ const Box4 = styled(motion.div)<{ bgPhoto: string }>`
 
 const Row2 = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  //grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 5px;
   position: absolute;
   width: 100%;
@@ -186,7 +187,8 @@ const Info = styled(motion.div)`
   width: 100%;
   padding: 10px;
   opacity: 0;
-  position: absolute;
+  //position: absolute;
+  position: static;
   bottom: 0;
   h4 {
     text-align: center;
@@ -295,7 +297,7 @@ const infoVariants = {
     },
   },
 };
-const offset = 6;
+const offset = 5;
 
 function Movie() {
   const queries = [

@@ -86,7 +86,8 @@ const Slider1 = styled.div`
 const Row = styled(motion.div)`
   display: grid;
   gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
+  //grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   position: absolute;
   width: 100%;
 `;
@@ -124,7 +125,8 @@ const Info = styled(motion.div)`
   width: 100%;
   padding: 10px;
   opacity: 0;
-  position: absolute;
+  //position: absolute;
+  position: static;
   bottom: 0;
   h4 {
     text-align: center;
@@ -243,7 +245,7 @@ const rowVariants = {
   visible: { x: 0 },
   exit: { x: -window.outerWidth - 5 },
 };
-const offset = 6;
+const offset = 5;
 
 function Tv() {
   const queries = [
