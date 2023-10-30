@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useQueries } from "react-query";
 import { getTvP, getTvT, ITv } from "../api";
 import { makeImagePath } from "../utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useMatch, useNavigate } from "react-router-dom";
 
@@ -126,8 +126,9 @@ const Info = styled(motion.div)`
   padding: 10px;
   opacity: 0;
   //position: absolute;
-  position: static;
-  bottom: 0;
+  //position: static;
+  //bottom: 0;
+  position: relative;
   h4 {
     text-align: center;
     font-size: 18px;
@@ -302,6 +303,11 @@ function Tv() {
   const clicked =
     modalMatch?.params.tvId &&
     newArr.find(el => String(el.id) === modalMatch?.params.tvId);
+
+  //페이지 맨위이동시 맨위스크롤
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   return (
     <>

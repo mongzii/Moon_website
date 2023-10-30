@@ -2,7 +2,7 @@ import { useQueries } from "react-query";
 import styled from "styled-components";
 import { getHomeTv, getHomeMovies, ITv } from "../api";
 import { makeImagePath } from "../utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { useNavigate, useMatch } from "react-router-dom";
 
@@ -120,14 +120,10 @@ const boxVariants = {
 };
 const Info = styled(motion.div)`
   padding: 10px;
+  width: 100%;
   background-color: ${props => props.theme.black.lighter};
   opacity: 0;
-  //position: absolute;
-
-  position: static;
-  width: 100%;
-
-  bottom: 0;
+  position: relative;
   h4 {
     text-align: center;
     font-size: 18px;
@@ -298,6 +294,11 @@ function Home() {
   const clicked =
     bigHomeTvMatch?.params.trendId &&
     newArr.find(el => String(el.id) === bigHomeTvMatch?.params.trendId);
+
+  //페이지 맨위이동시 맨위스크롤
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   return (
     <>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { motion, AnimatePresence, useViewportScroll } from "framer-motion";
 import { moviesPopular, moviesRated, moviesUpcomed, ITv } from "../api";
 import { makeImagePath } from "../utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useMatch } from "react-router-dom";
 
 const BREAK_POINT_PHONE = 378;
@@ -188,8 +188,9 @@ const Info = styled(motion.div)`
   padding: 10px;
   opacity: 0;
   //position: absolute;
-  position: static;
-  bottom: 0;
+  //position: static;
+  position: relative;
+  //bottom: 0;
   h4 {
     text-align: center;
     font-size: 18px;
@@ -355,6 +356,11 @@ function Movie() {
   const clicked =
     bigMovieMatch?.params.movieId &&
     newArr.find(el => String(el.id) === bigMovieMatch.params.movieId);
+
+  //페이지 맨위이동시 맨위스크롤
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   return (
     <>
